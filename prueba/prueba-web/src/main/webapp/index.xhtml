@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>#{continenteVC.titulo}</title>
+</h:head>
+<h:body>
+	<h1>#{continenteVC.titulo}</h1>
+	<h:form>
+		<p:panel id="pnlRegistro" styleClass="pnlRegistro">
+			<h:panelGrid columns="4">
+				<p:outputLabel for="txtId" value="Id" />
+				<p:inputText id="txtId" value="#{continenteVC.continente.id}"
+					readonly="true" style="background-color : gray;" />
+				<p:outputLabel for="txtCodigo" value="Código" />
+				<p:inputText id="txtCodigo"
+					value="#{continenteVC.continente.codigo}" required="true" />
+				<p:outputLabel for="txtNombre" value="Nombre" />
+				<p:inputText id="txtNombre"
+					value="#{continenteVC.continente.nombre}" />
+				<p:outputLabel for="somEstado" value="Estado" />
+				<p:selectOneMenu id="somEstado" required="true"
+					value="#{continenteVC.continente.estado}">
+					<f:selectItem itemLabel="Activo" itemValue="#{true}" />
+					<f:selectItem itemLabel="Inactivo" itemValue="#{false}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Guardar" process="@this, @(.pnlRegistro)"
+					update="@(.pnlRegistro, .pnlListado)"
+					actionListener="#{continenteVC.crear()}" />
+				<p:commandButton value="Editar" process="@this, @(.pnlRegistro)"
+					update="@(.pnlRegistro, .pnlListado)"
+					actionListener="#{continenteVC.editar()}" />
+				<p:commandButton value="Eliminar" process="@this, @(.pnlRegistro)"
+					update="@(.pnlRegistro, .pnlListado)"
+					actionListener="#{continenteVC.eliminar()}" />
+			</h:panelGrid>
+		</p:panel>
+		<br />
+		<p:panel id="pnlListado" styleClass="pnlListado">
+			<p:dataTable id="tblContinente" selectionMode="single"
+				selection="#{continenteVC.continente}"
+				value="#{continenteVC.listaContinentes}" var="continente"
+				rowKey="#{continente.id}" paginator="true" rows="5"
+				rowsPerPageTemplate="5,10,20">
+
+				<p:ajax event="rowSelect" update="@(.pnlRegistro)" />
+
+				<p:column headerText="Id" sortBy="#{continente.id}">
+					<p:outputLabel value="#{continente.id}" />
+				</p:column>
+				<p:column headerText="Código" sortBy="#{continente.codigo}">
+					<p:outputLabel value="#{continente.codigo}" />
+				</p:column>
+				<p:column headerText="Nombre" sortBy="#{continente.nombre}">
+					<p:outputLabel value="#{continente.nombre}" />
+				</p:column>
+				<p:column headerText="Estado" sortBy="#{continente.estado}">
+					<p:outputLabel value="#{continente.estado ? 'Activo' : 'Inactivo'}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

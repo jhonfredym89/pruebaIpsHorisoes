@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.ipshorisoes</groupId>
+	<artifactId>prueba</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>prueba</name>
+
+	<modules>
+		<module>prueba-dm</module>
+		<module>prueba-negocio</module>
+		<module>prueba-persistencia</module>
+		<module>prueba-web</module>
+		<module>prueba-ear</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Propiedades Personalizadas -->
+		<group.id.project>com.ipshorisoes</group.id.project>
+		<artifact.id.project>prueba</artifact.id.project>
+		<version.project>0.0.1-SNAPSHOT</version.project>
+		<name.project>prueba</name.project>
+
+		<!-- Versiones Java -->
+		<version.java>1.8</version.java>
+		<version.javaee>7.0</version.javaee>
+		<version.java.web>7.0</version.java.web>
+		<version.jsf>2.1</version.jsf>
+		<version.ejb.plugin>3.1</version.ejb.plugin>
+
+		<!-- Version Primefaces -->
+		<primefaces.version>6.0</primefaces.version>
+		<primefaces.extension.version>6.0.0</primefaces.extension.version>
+
+		<!-- Maven Plugins -->
+		<version.maven.jar.plugin>2.4</version.maven.jar.plugin>
+		<version.maven.war.plugin>2.4</version.maven.war.plugin>
+		<version.maven.processor.plugin>2.2.4</version.maven.processor.plugin>
+		<version.maven.compiler.plugin>3.1</version.maven.compiler.plugin>
+		<version.maven.dependency.plugin>2.8</version.maven.dependency.plugin>
+		<version.maven.help.plugin>2.2</version.maven.help.plugin>
+		<version.maven.exec.plugin>1.2.1</version.maven.exec.plugin>
+		<version.maven.jaxws.plugin>2.2</version.maven.jaxws.plugin>
+		<version.maven.surefire.plugin>2.16</version.maven.surefire.plugin>
+		<version.maven.failsafe.plugin>2.16</version.maven.failsafe.plugin>
+	</properties>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.maven.surefire.plugin}</version>
+					<configuration>
+						<skipTests>${skipUTs}</skipTests>
+						<argLine>-Duser.language=en -Duser.country=EN</argLine>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${version.maven.failsafe.plugin}</version>
+					<configuration>
+						<skipTests>${skipTests}</skipTests>
+						<skipITs>${skipITs}</skipITs>
+						<argLine>-Duser.language=en -Duser.country=EN</argLine>
+					</configuration>
+					<executions>
+						<execution>
+							<id>integration-test</id>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-help-plugin</artifactId>
+					<version>${version.maven.help.plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.maven.compiler.plugin}</version>
+					<inherited>true</inherited>
+					<configuration>
+						<source>${version.java}</source>
+						<target>${version.java}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${version.maven.war.plugin}</version>
+					<configuration>
+						<failOnMissingWebXml>false</failOnMissingWebXml>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${version.maven.jar.plugin}</version>
+				</plugin>
+
+				<!-- Codehaus -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>${version.maven.exec.plugin}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>java</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!-- JVNet -->
+				<plugin>
+					<groupId>org.jvnet.jax-ws-commons</groupId>
+					<artifactId>jaxws-maven-plugin</artifactId>
+					<version>${version.maven.jaxws.plugin}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.bsc.maven</groupId>
+					<artifactId>maven-processor-plugin</artifactId>
+					<version>${version.maven.processor.plugin}</version>
+					<executions>
+						<execution>
+							<id>process</id>
+							<goals>
+								<goal>process</goal>
+							</goals>
+							<phase>generate-sources</phase>
+							<configuration>
+								<processors>
+									<processor>org.eclipse.persistence.internal.jpa.modelgen.CanonicalModelProcessor</processor>
+								</processors>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.zeroturnaround
+										</groupId>
+										<artifactId>
+											jrebel-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1.5,)
+										</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
